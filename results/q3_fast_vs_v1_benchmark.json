@@ -1,0 +1,21 @@
+{
+  "seeds": 200,
+  "baseline": {
+    "full_clear_cases": 200,
+    "clear_ratio_mean": 1.0,
+    "clear_ratio_min": 1.0,
+    "virtual_time_mean_s": 7901.067019401909,
+    "virtual_time_median_s": 7761.042957976548,
+    "virtual_time_max_s": 10228.643761534913,
+    "avg_time_per_cleared_mean_s": 621.7858699561367
+  },
+  "fast": {
+    "full_clear_cases": 200,
+    "clear_ratio_mean": 1.0,
+    "clear_ratio_min": 1.0,
+    "virtual_time_mean_s": 4056.278902027987,
+    "virtual_time_median_s": 4052.4739992237182,
+    "virtual_time_max_s": 4915.404602552987,
+    "avg_time_per_cleared_mean_s": 322.9322392406481
+  }
+}

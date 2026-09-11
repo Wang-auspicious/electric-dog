@@ -1,0 +1,64 @@
+# 小红书评论核验（只读）
+
+核验时间：2026-09-11 20:04（Asia/Singapore；UTC 12:04）
+访问方式：按 web-access skill 的 CDP 路径，用临时 Chrome 页访问原始 URL；同时按 agent-reach 运行 `agent-reach doctor --json`、`opencli doctor`、`opencli list -f json`。doctor 结果：xiaohongshu active_backend=null；OpenCLI Daemon 正常但 Browser Bridge 扩展未连接；xiaohongshu-mcp/xhs-cli 未配置。因此没有登录、没有读取用户 Cookie、没有发评论/点赞/关注，也没有进入正式比赛测试。
+
+## 原帖 URL
+
+1. Better Rose：
+https://www.xiaohongshu.com/discovery/item/6aa29f3c000000002b0254cf?app_platform=android&app_version=9.23.0&apptime=1789126547&author_share=1&ignoreEngage=true&shareRedId=N0kyMztLPUE2NzUyOTgwNjY7OThGS0k5&share_from_user_hidden=true&share_id=3c5a7388422a41cea938f96d18b3fc4d&type=normal&xhsshare=WeixinSession&xsec_source=app_share&xsec_token=CBRHxzyprOTAwX_zSL4em8kEuSsD7yd-WELBfyVGK02VM=&xstag=1
+
+2. 芒果：
+https://www.xiaohongshu.com/discovery/item/6aa35ac0000000002901042a?app_platform=android&ignoreEngage=true&app_version=9.23.0&share_from_user_hidden=true&xsec_source=app_share&type=normal&xsec_token=CBPuWNhxt9E4pD1Ngs8555gf-iVOV0HdUZudHlnm1hF4Q%3D&author_share=1&xhsshare=&shareRedId=N0kyMztLPUE2NzUyOTgwNjY7OThGS0k5&apptime=1789126722&share_id=f55e0e8a60334977bcf904bba5839140&share_channel=wechat
+
+## 重要结论（针对 Q3 180/220 秒焦虑）
+
+在这两篇原帖当前无需登录即可展开看到的评论中，没有出现“Q3 180 秒”或“Q3 220 秒”的文字证据，也没有看到把 180/220 明确标为“平均每源/总时长/正式比赛成绩”的评论。可见的相关口径来自芒果帖：
+
+- 置顶作者评论：`最新第三问 第四问 245 470！`（未注明单位/是平均每源还是总时长）。
+- 作者回复：`现在第三问平均只需要80分钟 然后第四问128分钟，后面继续迭代优化，感觉走路上面还能完善`。这是分钟级、平均总耗时的表述（按原文）；不能直接换算成每源秒数。
+- 用户“烧鸡”追问：`平均每个源多少秒啊？总时长没啥用吧`；作者回复：`第三问300s 第四问 500s`。这里仍未说明 300s/500s 是每源、单案例、平均还是总时长；原文上下文更像对该追问的总时间回复，但不能替作者补充口径。
+- 作者另一回复：`是的，你可以拿我的去真实场景跑一下，我觉得会比99%跑的时间更短`；这是主观比较，不是正式比赛成绩或可复现实验统计。
+- 帖子正文写明：`已完成四问的核心建模与求解程序，并对第三、四问进行了700次本地仿真`。这证明“700 次本地仿真”这一事实，但未给出每次数据、均值/分位数、每源耗时或正式评测条件。
+
+因此，两帖的公开评论不能证明“别人 Q3 理想下限 180 多秒”或“别人当前 220 秒”；也不能据此直接与我们的离线 621 秒比较。尤其芒果帖同时出现 245/470、80 分钟/128 分钟、300s/500s 三组互不统一的时间口径，需先统一案例数、是否本地、每源还是总时长、平均/最坏值、是否包含走路/测量/切频。
+
+## Better Rose 帖：能访问的评论范围与摘录
+
+页面显示评论数随实时刷新变化（本次浏览约 307 条）；页面在首屏评论后出现“登录查看全部评论内容”。评论 API 首页返回 `has_more=true`、10 条一级评论，且部分楼中楼只给预览；未登录无法继续翻页。当前实际可读的 10 条一级评论及已返回的 8 条楼中楼预览：
+
+- 空山幽谷：`ABC题都做出来了，随便交流`；楼中楼 Yalo：`求`。
+- 小红薯666A97C5：`老师求求求`；作者 Better Rose：`好`。
+- 东君一：`求`；作者：`好`。
+- 123123：`老师求`；作者：`1`。
+- 洗衣机👿：`111`。
+- ff：`求完整版`；作者：`好`。
+- 、楓.：`求`；作者：`好`；页面另标 `展开 1 条回复`（其一级字段 `sub_comment_count=2`，仅返回 1 条预览）。
+- 小红薯68C156C6：`求`。
+- A牛角面包A：`求求`；作者：`1`。
+- 睡不醒的cang：`求[哭惹R]`；作者：`1`。
+
+此帖可读评论没有 180、220、621 等性能数值；评论主题基本是索要完整资料/代码。
+
+## 芒果帖：能访问的评论范围与摘录
+
+页面显示 `共 18 条评论`；评论 API 返回 `has_more=false` 的 8 条一级评论，并返回 5 条楼中楼预览；其中“猫猫毛毛茂”一级评论标注 5 条回复但只给 1 条预览，“不规则设计”标注 2 条回复但只给 1 条预览，故至少还有 5 条回复被登录墙挡住。当前可读内容：
+
+- 芒果（置顶）：`最新第三问 第四问 245 470！`
+- 猫猫毛毛茂：`辛苦啦煮啵[亲一个R]`；海盐.回复：`怎么样呀它这个（官方模拟器里面怎么样[皱眉R]）`；另有 4 条回复未展开。
+- 不规则设计：`模拟器跑出来的仿真数据吗`；芒果回复：`是的，你可以拿我的去真实场景跑一下，我觉得会比99%跑的时间更短`；另有 1 条回复未展开。
+- 芒果：`现在第三问平均只需要80分钟 然后第四问128分钟，后面继续迭代优化，感觉走路上面还能完善`；其楼中楼为作者的商品/代码说明：`感兴趣的可以直接拍商品，会有所有建模思路和所有可运行代码`。
+- 烧鸡：`平均每个源多少秒啊？总时长没啥用吧[赞R]`；芒果回复：`第三问300s 第四问 500s`。
+- 意生君：`结果多少[笑哭R]`；作者回复为空（无文字）。
+- 临清：`请问文献doi是什么呀`。
+- 城南花已开：`能发一下参考文献的片名呢？`
+
+未登录点击“展开 4 条回复/展开 1 条回复”会重新弹出登录二维码，没有成功展开；没有绕过登录墙，也没有声称已读到这些隐藏回复。
+
+## 可复核原始抓取结果（临时文件）
+
+- Better Rose 评论 API 首页 JSON：`%TEMP%\\xhs1_comment.json`；`has_more=true`，一级评论 10 条。
+- 芒果评论 API 首页 JSON：`%TEMP%\\xhs2_comment.json`；`has_more=false`，一级评论 8 条。
+- 评论页 API 路径：`edith.xiaohongshu.com/api/sns/web/v2/comment/page`（页面自身发出的只读请求）。
+
+以上只记录实际看到/实际返回的内容；评论数量和点赞数可能因实时新增而变化。

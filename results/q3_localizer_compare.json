@@ -1,0 +1,4 @@
+{'seeds': 100, 'first_station_distance': '0.7R', 'cases': 300, 'fixed800_mean_move_m': 1449.8234663652697, 'adaptive_mean_move_m': 1186.9036675197053, 'movement_saving_pct': 18.134607760537115, 'fixed800_success_rate': 1, 'adaptive_success_rate': 1, 'fixed800_mean_time_s': 306.2646932730539, 'adaptive_mean_time_s': 265.25073350394103}
+
+stress_random_start_distance
+{'seeds': 50, 'first_station_distance': 'uniform 6m..R', 'cases': 150, 'fixed800_mean_move_m': 1476.2905114155374, 'adaptive_mean_move_m': 951.2705211817675, 'movement_saving_pct': 35.56346031990382, 'fixed800_success_rate': 1, 'adaptive_success_rate': 1, 'fixed800_mean_time_s': 311.5714356164408, 'adaptive_mean_time_s': 214.62743756968686}
